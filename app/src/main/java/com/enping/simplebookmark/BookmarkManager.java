@@ -23,7 +23,6 @@ public class BookmarkManager {
     public static BookmarkService getInstance(){
         if(service == null) {
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://private-anon-bfaf73da5d-bookmark3.apiary-mock.com/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             service = retrofit.create(BookmarkService.class);
@@ -33,16 +32,5 @@ public class BookmarkManager {
 
     public interface BookmarkService {
 
-        @GET("bookmarks")
-        Call<List<Bookmark>> getBookmarks();
-
-        @POST("bookmarks")
-        Call<List<Bookmark>> addBookmark(@Body Bookmark bookmark);
-
-        @PUT("bookmarks/{id}")
-        Call<Bookmark> editBookmark(@Path("id") int id, @Body Bookmark bookmark);
-
-        @DELETE("bookmarks/{id}")
-        Call<Void> delBookmark(@Path("id") int id);
     }
 }
