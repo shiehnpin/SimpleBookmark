@@ -4,6 +4,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -22,7 +23,8 @@ public class BookmarkManager {
     public static BookmarkService getInstance(){
         if(service == null) {
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://api.github.com/")
+                    .baseUrl("https://private-anon-bfaf73da5d-bookmark3.apiary-mock.com/")
+                    .addConverterFactory(GsonConverterFactory.create())
                     .build();
             service = retrofit.create(BookmarkService.class);
         }
@@ -30,6 +32,7 @@ public class BookmarkManager {
     }
 
     public interface BookmarkService {
+
         @GET("bookmarks")
         Call<List<Bookmark>> getBookmarks();
 
@@ -37,7 +40,7 @@ public class BookmarkManager {
         Call<List<Bookmark>> addBookmark(@Body Bookmark bookmark);
 
         @PUT("bookmarks/{id}")
-        Call<Void> editBookmark(@Path("id") int id, @Body Bookmark bookmark);
+        Call<Bookmark> editBookmark(@Path("id") int id, @Body Bookmark bookmark);
 
         @DELETE("bookmarks/{id}")
         Call<Void> delBookmark(@Path("id") int id);
